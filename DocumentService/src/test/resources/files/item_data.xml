@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <row>
+    <itemId>1</itemId>
+    <price>19.99</price>
+    <quantity>2</quantity>
+    <totalPrice>39.98</totalPrice>
+    <tax>3.00</tax>
+  </row>
+  <row>
+    <itemId>2</itemId>
+    <price>5.50</price>
+    <quantity>5</quantity>
+    <totalPrice>27.50</totalPrice>
+    <tax>2.00</tax>
+  </row>
+  <row>
+    <itemId>3</itemId>
+    <price>15.00</price>
+    <quantity>3</quantity>
+    <totalPrice>45.00</totalPrice>
+    <tax>4.50</tax>
+  </row>
+  <row>
+    <itemId>4</itemId>
+    <price>22.00</price>
+    <quantity>1</quantity>
+    <totalPrice>22.00</totalPrice>
+    <tax>2.20</tax>
+  </row>
+  <row>
+    <itemId>5</itemId>
+    <price>8.75</price>
+    <quantity>4</quantity>
+    <totalPrice>35.00</totalPrice>
+    <tax>3.50</tax>
+  </row>
+</root>

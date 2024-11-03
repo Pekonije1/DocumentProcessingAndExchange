@@ -1,13 +1,11 @@
 package com.nikola.documentservice;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class DocumentServiceApplicationTests {
+class DocumentServiceApplicationTests extends AbstractTestBase {
 
-	@Test
-	void contextLoads() {
-	}
+    @Test
+    void contextLoads() {
+    }
 
 }

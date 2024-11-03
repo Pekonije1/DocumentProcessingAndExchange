@@ -1,0 +1,58 @@
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"  # Management UI
+    environment:
+      RABBITMQ_DEFAULT_USER: rabbituser
+      RABBITMQ_DEFAULT_PASS: rabbitsecret
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    environment:
+      POSTGRES_DB: document_service
+      POSTGRES_USER: document_service_user
+      POSTGRES_PASSWORD: document_service_password
+    ports:
+      - "5432:5432"
+
+  documentservice:
+    build:
+      context: ./documentservice
+      dockerfile: Dockerfile
+    container_name: documentservice
+    ports:
+      - "8081:8081"
+    environment:
+      DATABASE_URL: jdbc:postgresql://postgres:5432/document_service
+      DATABASE_USERNAME: document_service_user
+      DATABASE_PASSWORD: document_service_password
+      RABBIT_HOST: rabbitmq
+      RABBIT_PORT: 5672
+      RABBIT_USER: rabbituser
+      RABBIT_PASSWORD: rabbitsecret
+      UPLOAD_PATH: /app/documentexchange
+    volumes:
+      - ./documentexchange:/app/documentexchange
+    depends_on:
+      - rabbitmq
+      - postgres
+
+  processingservice:
+    build:
+      context: ./processingservice
+      dockerfile: Dockerfile
+    container_name: processingservice
+    ports:
+      - "8082:8082"
+    environment:
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: 5672
+      SPRING_RABBITMQ_USERNAME: rabbituser
+      SPRING_RABBITMQ_PASSWORD: rabbitsecret
+    volumes:
+      - ./documentexchange:/app/documentexchange
+    depends_on:
+      - rabbitmq
