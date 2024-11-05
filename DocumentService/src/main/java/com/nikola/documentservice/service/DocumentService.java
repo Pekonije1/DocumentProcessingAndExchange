@@ -2,13 +2,14 @@ package com.nikola.documentservice.service;
 
 import com.nikola.documentservice.dto.DocumentResponse;
 import com.nikola.documentservice.dto.ProcessedData;
+import com.nikola.documentservice.dto.UploadResponse;
 import com.nikola.documentservice.entity.Document;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 public interface DocumentService {
-    void upload(List<MultipartFile> files);
+    UploadResponse upload(List<MultipartFile> files);
 
     void save(ProcessedData processedData);
 

@@ -1,9 +1,9 @@
 package com.nikola.documentservice.controller;
 
 import com.nikola.documentservice.dto.DocumentResponse;
+import com.nikola.documentservice.dto.UploadResponse;
 import com.nikola.documentservice.service.DocumentService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,9 +22,8 @@ public class DocumentController {
     private final DocumentService documentservice;
 
     @PostMapping("/upload")
-    public ResponseEntity<?> uploadDocuments(@RequestParam List<MultipartFile> files) {
-        documentservice.upload(files);
-        return ResponseEntity.ok("Upload successful");
+    public UploadResponse uploadDocuments(@RequestParam List<MultipartFile> files) {
+        return documentservice.upload(files);
     }
 
     @GetMapping("/{documentId}")

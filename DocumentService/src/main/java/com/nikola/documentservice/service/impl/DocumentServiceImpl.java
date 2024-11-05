@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.nikola.documentservice.dto.DocumentResponse;
 import com.nikola.documentservice.dto.FileItem;
 import com.nikola.documentservice.dto.ProcessedData;
+import com.nikola.documentservice.dto.UploadResponse;
 import com.nikola.documentservice.entity.Document;
 import com.nikola.documentservice.entity.DocumentItem;
 import com.nikola.documentservice.enums.DocumentType;
@@ -24,6 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -39,26 +41,35 @@ public class DocumentServiceImpl implements DocumentService {
     private final DocumentMapper documentMapper;
 
     @Override
-    public void upload(List<MultipartFile> files) {
-        DocumentValidator.validate(files);
+    public UploadResponse upload(List<MultipartFile> files) {
+        List<String> uploaded = new ArrayList<>();
+        List<String> failedToUpload = new ArrayList<>();
 
         files.forEach(file -> {
-            Path uploadPath = fileService.saveFile(file);
+            if (!DocumentValidator.isValid(file))
+                failedToUpload.add(file.getOriginalFilename());
+            else {
+                Path uploadPath = fileService.saveFile(file);
 
-            Document document = Document.builder()
-                    .type(DocumentType.fromValue(file.getContentType()))
-                    .status(ProcessingStatus.PROCESSING)
-                    .path(uploadPath.toAbsolutePath().toString())
-                    .name(file.getOriginalFilename())
-                    .build();
-            document = documentRepository.save(document);
-
-            try {
-                enqueueService.sendUnprocessedDocument(document);
-            } catch (JsonProcessingException e) {
-                publisher.publishEvent(new DocumentProcessFailedEvent(document));
+                Document document = Document.builder()
+                        .type(DocumentType.fromValue(file.getContentType()))
+                        .status(ProcessingStatus.PROCESSING)
+                        .path(uploadPath.toAbsolutePath().toString())
+                        .name(file.getOriginalFilename())
+                        .build();
+                document = documentRepository.save(document);
+                uploaded.add(file.getOriginalFilename());
+                try {
+                    enqueueService.sendUnprocessedDocument(document);
+                } catch (JsonProcessingException e) {
+                    publisher.publishEvent(new DocumentProcessFailedEvent(document));
+                }
             }
         });
+        return UploadResponse.builder()
+                .failedToUpload(failedToUpload)
+                .uploaded(uploaded)
+                .build();
     }
 
     @Override

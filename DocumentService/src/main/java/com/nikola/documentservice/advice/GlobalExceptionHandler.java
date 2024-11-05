@@ -3,7 +3,6 @@ package com.nikola.documentservice.advice;
 import com.nikola.documentservice.dto.ErrorDto;
 import com.nikola.documentservice.exception.DocumentInvalidException;
 import com.nikola.documentservice.exception.DocumentNotFoundException;
-import com.nikola.documentservice.exception.DocumentTypeNotSupportedException;
 import com.nikola.documentservice.exception.FailedToUploadException;
 import com.nikola.documentservice.exception.FileTransferFailedException;
 import lombok.extern.slf4j.Slf4j;
@@ -26,13 +25,6 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorDto> handleDocumentNotFoundException(DocumentNotFoundException exception) {
         log.error(exception.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(ErrorDto.builder().message(exception.getMessage()).build());
-    }
-
-    @ExceptionHandler
-    public ResponseEntity<ErrorDto> handleDocumentTypeNotSupportedException(DocumentTypeNotSupportedException exception) {
-        log.error(exception.getMessage());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(ErrorDto.builder().message(exception.getMessage()).build());
     }
 
