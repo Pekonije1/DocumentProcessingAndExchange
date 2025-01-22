@@ -4,17 +4,17 @@ services:
     container_name: rabbitmq
     ports:
       - "5672:5672"
-      - "15672:15672"  # Management UI
+      - "15672:15672"
     environment:
-      RABBITMQ_DEFAULT_USER: rabbituser
-      RABBITMQ_DEFAULT_PASS: rabbitsecret
+      RABBITMQ_DEFAULT_USER: rabbituser_wNgn#q6$kJ0
+      RABBITMQ_DEFAULT_PASS: rabbitsecret_wNgn#q6$kJ1
   postgres:
     image: postgres:latest
     container_name: postgres
     environment:
-      POSTGRES_DB: document_service
-      POSTGRES_USER: document_service_user
-      POSTGRES_PASSWORD: document_service_password
+      POSTGRES_DB: Document_service_database_MRNnNfHFn4FVz5buXh0
+      POSTGRES_USER: Document_service_user_MRNnNfHFn4FVz5buXh1
+      POSTGRES_PASSWORD: Document_service_password_MRNnNfHFn4FVz5buXh2
     ports:
       - "5432:5432"
 
@@ -26,16 +26,16 @@ services:
     ports:
       - "8081:8081"
     environment:
-      DATABASE_URL: jdbc:postgresql://postgres:5432/document_service
-      DATABASE_USERNAME: document_service_user
-      DATABASE_PASSWORD: document_service_password
+      DATABASE_URL: jdbc:postgresql://postgres:5432/Document_service_database_MRNnNfHFn4FVz5buXh0
+      DATABASE_USERNAME: Document_service_user_MRNnNfHFn4FVz5buXh1
+      DATABASE_PASSWORD: Document_service_password_MRNnNfHFn4FVz5buXh2
       RABBIT_HOST: rabbitmq
       RABBIT_PORT: 5672
       RABBIT_USER: rabbituser
       RABBIT_PASSWORD: rabbitsecret
-      UPLOAD_PATH: /app/documentexchange
+      UPLOAD_PATH: /app/document_exchange
     volumes:
-      - ./documentexchange:/app/documentexchange
+      - ./document_exchange:/app/document_exchange
     depends_on:
       - rabbitmq
       - postgres
@@ -50,9 +50,9 @@ services:
     environment:
       SPRING_RABBITMQ_HOST: rabbitmq
       SPRING_RABBITMQ_PORT: 5672
-      SPRING_RABBITMQ_USERNAME: rabbituser
-      SPRING_RABBITMQ_PASSWORD: rabbitsecret
+      SPRING_RABBITMQ_USERNAME: rabbituser_wNgn#q6$kJ0
+      SPRING_RABBITMQ_PASSWORD: rabbitsecret_wNgn#q6$kJ1
     volumes:
-      - ./documentexchange:/app/documentexchange
+      - ./document_exchange:/app/document_exchange
     depends_on:
       - rabbitmq
