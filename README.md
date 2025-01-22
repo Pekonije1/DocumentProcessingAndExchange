@@ -32,9 +32,9 @@ In case of inability to read a message, processing service will forward it to de
 Example of supported files and files that contain valid data, can be found in this [directory](https://github.com/Pekonije1/DocumentProcessingAndExchange/tree/main/ProcessingService/src/test/resources/files). 
 
 ### How to run?
-1. Download [Docker](https://www.docker.com/get-started/)
+1. Download and install [Docker](https://www.docker.com/get-started/)
 2. Check out the repository
-3. Navigate to the project directory and execute following command:
+3. Navigate to the project directory and execute the following command:
 ```
 docker compose up
 ```
