@@ -3,18 +3,18 @@
 ### Overview
 
 Sample project that is used for specific data extraction from files.
+
 Project contains two microservices.
 
-1. DocumentService - receives files and stores data
-2. ProcessingService - processes files received from DocumentService and sends information back.
+1. `DocumentService` - receives files and stores data
+2. `ProcessingService` - processes files received from DocumentService and sends information back.
 
 Communication between services is done via RabbitMq.
 
 ### Endpoints:
 
-1. POST: /documents/upload
-Receives multiple files
-2. GET /documents/{documentId}
+1. GET `/documents/{documentId}` -> get single document
+2. POST: `/documents/upload` -> upload document
 
 ### How it works?
 
@@ -32,7 +32,10 @@ In case of inability to read a message, processing service will forward it to de
 Example of supported files and files that contain valid data, can be found in this [directory](https://github.com/Pekonije1/DocumentProcessingAndExchange/tree/main/ProcessingService/src/test/resources/files). 
 
 ### How to run?
-1. Install docker
-2. Check out repository
-3. Navigate to project folder and run: `docker compose up`
+1. Download [Docker](https://www.docker.com/get-started/)
+2. Check out the repository
+3. Navigate to the project directory and execute following command:
+```
+docker compose up
+```
 
