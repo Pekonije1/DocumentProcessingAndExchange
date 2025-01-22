@@ -13,8 +13,8 @@ Communication between services is done via RabbitMq.
 
 ### Endpoints:
 
-1. GET `/documents/{documentId}` -> get single document
-2. POST: `/documents/upload` -> upload document
+1. **GET** `/documents/{documentId}` -> get single document
+2. **POST**: `/documents/upload` -> upload document
 
 ### How it works?
 
